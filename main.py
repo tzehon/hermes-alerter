@@ -40,7 +40,7 @@ def hermes_scraper():
     try:
         message = Mail(
             from_email='tth@example.com',
-            to_emails='tzehon.tan@gmail.com',
+            to_emails='staceywongss@gmail.com',
             subject='Latest Hermes selection',
             html_content='Wanted bags: ' + str(wanted_bags) + '\n' + 
                 'Available bags:' + str(interested_bags))
