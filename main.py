@@ -2,6 +2,9 @@ import requests
 import pprint
 import os
 
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 from flask import Flask
 from bs4 import BeautifulSoup
 
@@ -33,6 +36,22 @@ def hermes_scraper():
 
     print("Wanted bags: " + str(wanted_bags))
     print("Available bags: " + str(interested_bags))
+
+    try:
+        message = Mail(
+            from_email='tth@example.com',
+            to_emails='tzehon.tan@gmail.com',
+            subject='Latest Hermes selection',
+            html_content='Wanted bags: ' + str(wanted_bags) + '\n' + 
+                'Available bags:' + str(interested_bags))
+
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
 
     return str(interested_bags)
 
