@@ -9,6 +9,8 @@ pylint = "*"
 [packages]
 requests = "*"
 beautifulsoup4 = "*"
+flask = "*"
+functions-framework = "*"
 
 [requires]
 python_version = "3.8"
