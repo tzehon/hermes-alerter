@@ -13,6 +13,7 @@ flask = "*"
 functions-framework = "*"
 sendgrid = "*"
 pyyaml = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.8"
