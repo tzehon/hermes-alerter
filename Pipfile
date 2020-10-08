@@ -12,6 +12,7 @@ beautifulsoup4 = "*"
 flask = "*"
 functions-framework = "*"
 sendgrid = "*"
+pyyaml = "*"
 
 [requires]
 python_version = "3.8"
