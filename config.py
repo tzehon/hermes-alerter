@@ -5,5 +5,5 @@ def load():
         # The FullLoader parameter handles the conversion from YAML
         # scalar values to Python the dictionary format
         categories = yaml.load(file, Loader=yaml.FullLoader)
-        print(categories)
+        # print(categories)
         return categories

@@ -8,16 +8,14 @@ from sendgrid.helpers.mail import Mail
 from flask import Flask
 from bs4 import BeautifulSoup
 
+import config
+
 app = Flask(__name__)
 
 @app.route('/')
 def hermes_scraper():
-    wanted_bags = [
-        'Lindy',
-        'Birkin',
-        'Kelly',
-        'Bolide 27'
-    ]
+    bags = config.load()
+    print(bags['categories'])
 
     URL = 'https://www.hermes.com/sg/en/category/women/bags-and-small-leather-goods/bags-and-clutches/'
     page = requests.get(URL)
@@ -29,12 +27,13 @@ def hermes_scraper():
     interested_bags = []
     for item in items:
         available_bag = item.text.strip()
-        print("Bag on site: " + available_bag)
-        for wanted_bag in wanted_bags:
+        for wanted_bag in bags['categories']:
+            print("Bag on site: " + available_bag)
+            print("Wanted: " + wanted_bag + "\n")
+
             if wanted_bag in available_bag:
                 interested_bags.append(available_bag)
 
-    print("Wanted bags: " + str(wanted_bags))
     print("Available bags: " + str(interested_bags))
 
     try:
@@ -42,7 +41,7 @@ def hermes_scraper():
             from_email='tth@example.com',
             to_emails='staceywongss@gmail.com',
             subject='Latest Hermes selection',
-            html_content='Wanted bags: ' + str(wanted_bags) + '\n' + 
+            html_content='Wanted bags: ' + str(categories) + '\n' + 
                 'Available bags:' + str(interested_bags))
 
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))

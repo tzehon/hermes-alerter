@@ -1,4 +1,4 @@
 import config
 
 def test_load():
-    assert config.load() == {'sports': ['Lindy', 'Birkin', 'Kelly', 'Bolide 27']}
+    assert config.load() == {'categories': ['Lindy', 'Birkin', 'Kelly', 'Bolide 27']}
