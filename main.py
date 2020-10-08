@@ -41,7 +41,7 @@ def hermes_scraper():
             from_email='tth@example.com',
             to_emails='staceywongss@gmail.com',
             subject='Latest Hermes selection',
-            html_content='Wanted bags: ' + str(categories) + '\n' + 
+            html_content='Wanted bags: ' + str(bags['categories']) + '\n' + 
                 'Available bags:' + str(interested_bags))
 
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
