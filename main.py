@@ -24,10 +24,9 @@ def hermes_scraper():
 
     for bag_on_site_html in bags_on_site:
         bag_on_site = bag_on_site_html.text.strip()
-        for wanted_bag in wanted_bags['categories']:
-            print("Bag on site: " + bag_on_site)
-            print("Wanted: " + wanted_bag + "\n")
+        print("Bag on site: " + bag_on_site)
 
+        for wanted_bag in wanted_bags['categories']:
             if wanted_bag in bag_on_site:
                 available_bags.append(bag_on_site)
 
