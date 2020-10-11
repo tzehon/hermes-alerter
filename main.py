@@ -2,57 +2,38 @@ import requests
 import pprint
 import os
 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-
 from flask import Flask
 from bs4 import BeautifulSoup
 
 import config
+import notify
 
 app = Flask(__name__)
 
 @app.route('/')
 def hermes_scraper():
-    bags = config.load()
-    print(bags['categories'])
+    wanted_bags = config.load()
+    print(wanted_bags['categories'])
 
     URL = 'https://www.hermes.com/sg/en/category/women/bags-and-small-leather-goods/bags-and-clutches/'
     page = requests.get(URL)
-
     soup = BeautifulSoup(page.content, 'html.parser')
+    bags_on_site = soup.find_all(class_='product-item-name')
+    available_bags = []
 
-    items = soup.find_all(class_='product-item-name')
-
-    interested_bags = []
-    for item in items:
-        available_bag = item.text.strip()
-        for wanted_bag in bags['categories']:
-            print("Bag on site: " + available_bag)
+    for bag_on_site_html in bags_on_site:
+        bag_on_site = bag_on_site_html.text.strip()
+        for wanted_bag in wanted_bags['categories']:
+            print("Bag on site: " + bag_on_site)
             print("Wanted: " + wanted_bag + "\n")
 
-            if wanted_bag in available_bag:
-                interested_bags.append(available_bag)
+            if wanted_bag in bag_on_site:
+                available_bags.append(bag_on_site)
 
-    print("Available bags: " + str(interested_bags))
-
-    try:
-        message = Mail(
-            from_email='tth@example.com',
-            to_emails='staceywongss@gmail.com',
-            subject='Latest Hermes selection',
-            html_content='Wanted bags: ' + str(bags['categories']) + '\n' + 
-                'Available bags:' + str(interested_bags))
-
-        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-        response = sg.send(message)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
-    except Exception as e:
-        print(e)
-
-    return str(interested_bags)
+    print("Wanted bags: " + str(wanted_bag))
+    print("Available bags: " + str(available_bags))
+    notify.email(wanted_bags, available_bags)
+    return str(available_bags)
 
     if __name__ == "__main__":
         app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))

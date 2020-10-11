@@ -1,4 +1,9 @@
+import os
 import yaml
+
+def get_emails():
+    emails = os.environ.get('EMAILS').split()
+    return emails
 
 def load():
     with open(r'categories.yaml') as file:
