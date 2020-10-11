@@ -30,7 +30,7 @@ def hermes_scraper():
             if wanted_bag in bag_on_site:
                 available_bags.append(bag_on_site)
 
-    print("Wanted bags: " + str(wanted_bag))
+    print("Wanted bags: " + str(wanted_bags))
     print("Available bags: " + str(available_bags))
     notify.email(wanted_bags, available_bags)
     return str(available_bags)
