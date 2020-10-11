@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 import config
 import notify
+import db
 
 app = Flask(__name__)
 
@@ -30,9 +31,20 @@ def hermes_scraper():
             if wanted_bag in bag_on_site:
                 available_bags.append(bag_on_site)
 
-    print("Wanted bags: " + str(wanted_bags))
-    print("Available bags: " + str(available_bags))
-    notify.email(wanted_bags, available_bags)
+    previous_bags = db.get_bags()
+    available_bags.sort()
+    print(f'Previous bags: {previous_bags}')
+    print(f'Wanted bags: {wanted_bags}')
+    print(f'Available bags: {available_bags}')
+    print(f'previous bags == current bags: {previous_bags == available_bags}')
+
+    if (previous_bags != available_bags):
+        print("Change in bags")
+        notify.email(wanted_bags, available_bags)
+        db.update_bags(available_bags)
+    else:
+        print("No change")
+
     return str(available_bags)
 
     if __name__ == "__main__":
