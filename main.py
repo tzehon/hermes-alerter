@@ -17,11 +17,13 @@ def hermes_scraper():
     print(wanted_bags['categories'])
 
     URL = 'https://www.hermes.com/sg/en/category/women/bags-and-small-leather-goods/bags-and-clutches/'
-    page = requests.get(URL)
+    page = requests.get(URL, headers={'Cache-Control': 'no-cache'})
+    print(f'Status code: {page.status_code}')
     soup = BeautifulSoup(page.content, 'html.parser')
     bags_on_site = soup.find_all(class_='product-item-name')
     available_bags = []
 
+    print(f'Number of bags: {len(bags_on_site)}')
     for bag_on_site_html in bags_on_site:
         bag_on_site = bag_on_site_html.text.strip()
         print("Bag on site: " + bag_on_site)
