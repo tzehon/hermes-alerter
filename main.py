@@ -16,7 +16,7 @@ def hermes_scraper():
     wanted_bags = config.load()
     print(wanted_bags['categories'])
 
-    URL = 'https://www.hermes.com/sg/en/category/women/bags-and-small-leather-goods/bags-and-clutches/'
+    URL = config.get_url()
     page = requests.get(URL, headers={'Cache-Control': 'no-cache'})
     print(f'Status code: {page.status_code}')
     soup = BeautifulSoup(page.content, 'html.parser')
