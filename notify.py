@@ -21,9 +21,9 @@ def email(wanted_bags, available_bags):
     try:
         message = Mail(
             from_email='tth@example.com',
-            subject='Latest Hermes selection',
-            html_content='Wanted bags: ' + str(wanted_bags['categories']) + '\n' + 
-                'Available bags:' + str(available_bags))
+            subject='Latest selection',
+            html_content='Wanted: ' + str(wanted_bags['categories']) + '\n' + 
+                'Available:' + str(available_bags))
         message.add_personalization(recipients)
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
