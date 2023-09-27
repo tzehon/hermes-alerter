@@ -4,17 +4,25 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+certifi = ">=2023.7.22"
+grpcio = ">=1.53.0"
+flask = ">=2.2.5"
 pylint = "*"
+requests = ">=2.31.0"
+Werkzeug = ">=2.2.3"
 
 [packages]
-requests = "*"
+certifi = ">=2023.7.22"
+grpcio = ">=1.53.0"
 beautifulsoup4 = "*"
-flask = "*"
+flask = ">=2.2.5"
 functions-framework = "*"
+requests = ">=2.31.0"
 sendgrid = "*"
 pyyaml = "*"
 pytest = "*"
 google-cloud-firestore = "*"
+Werkzeug = ">=2.2.3"
 
 [requires]
-python_version = "3.8"
+python_version = "3.11"
